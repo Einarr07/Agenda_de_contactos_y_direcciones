@@ -1,0 +1,31 @@
+/* Home.css */
+
+body {
+    margin: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .ion-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .ion-content .page-description {
+    font-size: 18px;
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .ion-content .login-button {
+    width: 80%;
+    max-width: 300px;
+    margin-top: 20px;
+  }
+  
+  
+  
