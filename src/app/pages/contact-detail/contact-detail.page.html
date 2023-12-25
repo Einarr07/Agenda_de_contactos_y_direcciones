@@ -1,0 +1,36 @@
+<!-- src/app/pages/contact-detail/contact-detail.page.html -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Detalles del Contacto
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      {{ contacto.nombre }} {{ contacto.apellido }}
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Dirección:</ion-label>
+        <ion-text>{{ contacto.direccion }}</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Teléfono:</ion-label>
+        <ion-text>{{ contacto.telefono }}</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Correo:</ion-label>
+        <ion-text>{{ contacto.correo }}</ion-text>
+      </ion-item>
+
+      <ion-img [src]="contacto.foto" alt="Foto de {{ contacto.nombre }}"></ion-img>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

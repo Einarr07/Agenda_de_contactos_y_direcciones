@@ -1,0 +1,33 @@
+<!-- src/app/pages/contact-list/contact-list.page.html -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Agenda de Contactos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let contacto of contactos" (click)="verDetalles(contacto.telefono)">
+      <ion-avatar slot="start">
+        <ion-img [src]="contacto.foto"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ contacto.nombre }}</h2>
+        <p>{{ contacto.direccion }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="agregarContacto()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+  <!-- Verifica si hay al menos un contacto antes de mostrar el botón -->
+  <ion-button *ngIf="contactos.length > 0" expand="full" (click)="verDetalles(contactos[0].telefono)">Ver Detalles del Contacto</ion-button>
+  <ion-button expand="full" routerLink="/edit-contact">Editar Contacto</ion-button>
+</ion-content>
