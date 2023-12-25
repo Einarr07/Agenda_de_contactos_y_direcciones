@@ -1,7 +1,0 @@
-{
-  "name": "Agenda_de_contactos_y_direcciones",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
