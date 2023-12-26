@@ -1,5 +1,7 @@
+// src/app/services/contact.service.ts
+
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore'; // Cambia esta línea
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -24,5 +26,13 @@ export class ContactService {
     return this.firestore.collection('contactos', ref => ref.where('telefono', '==', numeroTelefono)).valueChanges();
   }
 
+  getContactoPorId(contactoId: string): Observable<any> {
+    return this.firestore.doc(`contactos/${contactoId}`).valueChanges();
+  }
+
   // Puedes agregar más funciones según tus necesidades
+
+  actualizarContacto(contacto: any) {
+    // Implementa la lógica para actualizar el contacto en Firebase
+  }
 }
