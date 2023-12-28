@@ -8,7 +8,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <ion-list>
     <ion-item>
       <ion-label position="stacked">Nombre</ion-label>
@@ -35,9 +35,11 @@
       <ion-input [(ngModel)]="nuevoContacto.correo" name="correo" type="email"></ion-input>
     </ion-item>
 
+    <!-- Agregamos botones para tomar foto o seleccionar desde la galería -->
     <ion-item>
       <ion-label position="stacked">Foto</ion-label>
-      <input type="file" (change)="onFileSelected($event)">
+      <ion-button expand="full" (click)="tomarFoto()">Tomar Foto</ion-button>
+      <ion-button expand="full" (click)="seleccionarFoto()">Seleccionar Foto</ion-button>
     </ion-item>
   </ion-list>
 
@@ -65,6 +67,8 @@
   </div>
   
   <!-- Botones para guardar y volver -->
-  <ion-button expand="full" (click)="guardarContacto()">Guardar Contacto</ion-button>
-  <ion-button expand="full" (click)="volverAlHome()">Volver al Home</ion-button>
+  <div class="ion-margin-top ion-padding">
+    <ion-button expand="full" (click)="guardarContacto()">Guardar Contacto</ion-button>
+    <ion-button expand="full" (click)="volverAlHome()">Volver al Home</ion-button>
+  </div>
 </ion-content>

@@ -1,9 +1,8 @@
-// src/app/pages/add-contact/add-contact.page.ts
-
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ContactService } from '../../services/contact.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-add-contact',
@@ -31,9 +30,9 @@ export class AddContactPage {
 
   async guardarContacto() {
     try {
-      const ubicacion = await this.obtenerUbicacion(); 
+      const ubicacion = await this.obtenerUbicacion();
       this.nuevoContacto.direccion = ubicacion;
-  
+
       await this.contactService.agregarContacto(this.nuevoContacto);
       console.log('Contacto agregado con éxito.');
       this.navCtrl.navigateBack('/contact-list');
@@ -41,17 +40,17 @@ export class AddContactPage {
       console.error('Error al agregar el contacto:', error);
     }
   }
-  
+
   async obtenerUbicacion(): Promise<string> {
     try {
       const position = await this.geolocation.getCurrentPosition();
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
-  
+
       const ubicacion = `Latitud: ${lat}, Longitud: ${lon}`;
       this.latitude = lat;
       this.longitude = lon;
-  
+
       return ubicacion;
     } catch (error) {
       console.error('Error al obtener la ubicación:', error);
@@ -59,8 +58,52 @@ export class AddContactPage {
     }
   }
 
+  async tomarFoto() {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Base64,
+        source: CameraSource.Camera
+      });
+  
+      this.nuevoContacto.foto = 'data:image/jpeg;base64,' + image.base64String;
+    } catch (error) {
+      console.error('Error al tomar la foto:', error);
+    }
+  }  
+
+  async seleccionarFoto() {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Base64,
+        source: CameraSource.Photos
+      });
+
+      this.nuevoContacto.foto = 'data:image/jpeg;base64,' + image.base64String;
+    } catch (error) {
+      console.error('Error al seleccionar la foto:', error);
+    }
+  }
+
   onFileSelected(event: any) {
-    console.log(event.target.files[0]);
+    const file = event.target.files[0];
+
+    if (file) {
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+
+        reader.onload = (e: any) => {
+          this.nuevoContacto.foto = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        console.error('El archivo seleccionado no es una imagen.');
+      }
+    }
   }
 
   volverAlHome() {
@@ -72,6 +115,6 @@ export class AddContactPage {
   }
 
   getCurrentCoordinates() {
-    this.obtenerUbicacion(); // Si deseas obtener las coordenadas al hacer clic
+    this.obtenerUbicacion();
   }
 }

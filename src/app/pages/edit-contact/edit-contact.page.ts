@@ -1,10 +1,11 @@
 // src/app/pages/edit-contact/edit-contact.page.ts
 
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { ContactService } from '../../services/contact.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ActivatedRoute } from '@angular/router';
+import { CameraResultType, CameraSource, Camera } from '@capacitor/camera';
 
 @Component({
   selector: 'app-edit-contact',
@@ -12,14 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['edit-contact.page.scss']
 })
 export class EditContactPage {
-  contactoEditado = {
-    nombre: '',
-    apellido: '',
-    direccion: '',
-    telefono: '',
-    correo: '',
-    foto: ''
-  };
+  contactoEditado: any;
 
   latitude: any = 0;
   longitude: any = 0;
@@ -28,13 +22,27 @@ export class EditContactPage {
     private navCtrl: NavController,
     private route: ActivatedRoute,
     private contactService: ContactService,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private platform: Platform
   ) {}
 
   ionViewWillEnter() {
-    // Este método se ejecuta cada vez que la página está a punto de ser mostrada
-    // Obtener el contacto a editar de los parámetros de navegación
-    this.contactoEditado = (this.route.snapshot.data as any)['contacto'];
+    const numeroTelefono = this.route.snapshot.paramMap.get('id');
+
+    // Obtén el contacto a editar por número de teléfono
+    this.contactoEditado = numeroTelefono ? this.contactService.getContactoPorTelefono(numeroTelefono) : null;
+
+    // Asegúrate de que todos los campos estén inicializados
+    if (this.contactoEditado) {
+      this.contactoEditado = {
+        nombre: this.contactoEditado.nombre || '',
+        apellido: this.contactoEditado.apellido || '',
+        direccion: this.contactoEditado.direccion || '',
+        telefono: this.contactoEditado.telefono || '',
+        correo: this.contactoEditado.correo || '',
+        foto: this.contactoEditado.foto || ''
+      };
+    }
   }
 
   async guardarContactoEditado() {
@@ -68,8 +76,43 @@ export class EditContactPage {
     }
   }
 
+  async tomarFoto() {
+    if (!this.platform.is('hybrid')) {
+      console.log('La función de la cámara solo está disponible en dispositivos móviles.');
+      return;
+    }
+
+    const image = await Camera["getPhoto"]({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
+    });
+    
+
+    this.contactoEditado.foto = image.dataUrl;
+  }
+
+  async seleccionarFoto() {
+    if (!this.platform.is('hybrid')) {
+      console.log('La selección de la galería solo está disponible en dispositivos móviles.');
+      return;
+    }
+
+    const image = await Camera["getPhoto"]({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
+    });
+    
+
+    this.contactoEditado.foto = image.dataUrl;
+  }
+
   onFileSelected(event: any) {
     console.log(event.target.files[0]);
+    // Puedes agregar lógica aquí para manejar la selección de un archivo desde el sistema de archivos
   }
 
   volverAlHome() {
@@ -81,6 +124,12 @@ export class EditContactPage {
   }
 
   getCurrentCoordinates() {
-    this.obtenerUbicacion();
-  }
+    this.obtenerUbicacion()
+      .then(() => {
+        console.log('Coordenadas obtenidas con éxito.');
+      })
+      .catch(error => {
+        console.error('Error al obtener coordenadas:', error);
+      });
+  }  
 }

@@ -19,9 +19,9 @@ const routes: Routes = [
     loadChildren: () => import('./pages/add-contact/add-contact.module').then( m => m.AddContactPageModule)
   },
   {
-    path: 'edit-contact',
-    loadChildren: () => import('./pages/edit-contact/edit-contact.module').then( m => m.EditContactPageModule)
-  },
+    path: 'edit-contact/:id', // Cambié la ruta para incluir el ID del contacto
+    loadChildren: () => import('./pages/edit-contact/edit-contact.module').then(m => m.EditContactPageModule)
+  },  
   {
     path: '',
     redirectTo: 'home',
