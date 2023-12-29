@@ -1,8 +1,14 @@
+<!-- home.component.html -->
+
 <ion-header>
   <ion-toolbar>
     <ion-title>
       Bienvenido a la Agenda de Contactos
     </ion-title>
+    <ion-buttons slot="end">
+      <!-- Agregamos el botón de salida (logout) -->
+      <ion-button (click)="logout()">Salir</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
