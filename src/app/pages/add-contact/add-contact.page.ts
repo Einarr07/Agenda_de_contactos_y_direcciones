@@ -4,6 +4,7 @@ import { ContactService } from '../../services/contact.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
+
 @Component({
   selector: 'app-add-contact',
   templateUrl: 'add-contact.page.html',
