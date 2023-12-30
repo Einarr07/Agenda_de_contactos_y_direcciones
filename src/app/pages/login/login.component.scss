@@ -1,54 +1,56 @@
-/* login.component.scss (o tu archivo de estilos preferido) */
+/* login.component.scss */
 
 .login-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    background-color: #fff;
-  }
-  
-  h2 {
-    text-align: center;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px; /* Añadido para separar el botón del formulario */
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .separator {
-    margin: 20px 0;
-    height: 1px;
-    background-color: #ccc;
-  }
-  
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+h2 {
+  text-align: center;
+  color: #000; /* Color negro para el texto */
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: black;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px; /* Añadido para separar el botón del formulario */
+  transition: background-color 0.3s ease; /* Agregado para animación suave al pasar el mouse */
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.separator {
+  margin: 20px 0;
+  height: 1px;
+  background-color: #ccc;
+}

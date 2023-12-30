@@ -9,28 +9,38 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
+  <ion-card *ngIf="contacto">
     <ion-card-header>
-      {{ contacto.nombre }} {{ contacto.apellido }}
+      {{ contacto?.nombre || 'Nombre no disponible' }} {{ contacto?.apellido || 'Apellido no disponible' }}
     </ion-card-header>
 
     <ion-card-content>
-      <ion-item>
+      <ion-item *ngIf="contacto?.direccion">
         <ion-label>Dirección:</ion-label>
-        <ion-text>{{ contacto.direccion }}</ion-text>
+        <ion-text>{{ contacto?.direccion }}</ion-text>
       </ion-item>
 
-      <ion-item>
+      <ion-item *ngIf="contacto?.telefono">
         <ion-label>Teléfono:</ion-label>
-        <ion-text>{{ contacto.telefono }}</ion-text>
+        <ion-text>{{ contacto?.telefono }}</ion-text>
       </ion-item>
 
-      <ion-item>
+      <ion-item *ngIf="contacto?.correo">
         <ion-label>Correo:</ion-label>
-        <ion-text>{{ contacto.correo }}</ion-text>
+        <ion-text>{{ contacto?.correo }}</ion-text>
       </ion-item>
 
-      <ion-img [src]="contacto.foto" alt="Foto de {{ contacto.nombre }}"></ion-img>
+      <ion-item *ngIf="contacto?.foto">
+        <ion-label>Foto:</ion-label>
+        <ion-img [src]="contacto?.foto" alt="Foto de {{ contacto?.nombre }}"></ion-img>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mostrar un mensaje si no hay detalles disponibles -->
+  <ion-card *ngIf="!contacto || (!contacto.nombre && !contacto.apellido)">
+    <ion-card-content>
+      No hay detalles disponibles para este contacto.
     </ion-card-content>
   </ion-card>
 </ion-content>

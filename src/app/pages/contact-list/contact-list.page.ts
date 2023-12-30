@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 export class ContactListPage implements OnDestroy {
   contactos: any[] = []; // Asegúrate de tener datos aquí o de que se llenen correctamente
   private contactosSubscription: Subscription;
+  contactoSeleccionado: string | null = null;
 
   constructor(private navCtrl: NavController, private contactService: ContactService) {
     this.contactosSubscription = this.contactService.getContactos().subscribe(data => {
@@ -35,6 +36,7 @@ export class ContactListPage implements OnDestroy {
   verDetalles(numeroTelefono: string) {
     // Navega a la página de detalles y pasa el número de teléfono como parámetro
     this.navCtrl.navigateForward(`/contact-detail/${numeroTelefono}`);
+    this.contactoSeleccionado = numeroTelefono; // Marca como seleccionado
   }
 
   agregarContacto() {
