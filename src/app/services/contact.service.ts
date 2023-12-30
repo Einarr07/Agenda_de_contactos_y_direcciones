@@ -30,9 +30,16 @@ export class ContactService {
     return this.firestore.doc(`contactos/${contactoId}`).valueChanges();
   }
 
-  // Puedes agregar más funciones según tus necesidades
-
   actualizarContacto(contacto: any) {
-    // Implementa la lógica para actualizar el contacto en Firebase
+    const id = contacto.id; // Asegúrate de tener un campo 'id' en tu modelo
+
+    // Copia el objeto para evitar problemas de referencia
+    const contactoActualizado = { ...contacto };
+
+    // Elimina el campo 'id' del objeto para que no se incluya en la actualización
+    delete contactoActualizado.id;
+
+    // Actualiza el contacto en la base de datos
+    return this.firestore.doc(`contactos/${id}`).update(contactoActualizado);
   }
 }

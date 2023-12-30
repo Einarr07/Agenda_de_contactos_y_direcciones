@@ -37,6 +37,8 @@
     </ion-card-content>
   </ion-card>
 
+  <ion-button expand="full" [routerLink]="['/edit-contact', contacto?.id]">Editar Contacto</ion-button>
+  <ion-button expand="full" [routerLink]="['/contact-list']">Volver a la Lista</ion-button>
   <!-- Mostrar un mensaje si no hay detalles disponibles -->
   <ion-card *ngIf="!contacto || (!contacto.nombre && !contacto.apellido)">
     <ion-card-content>

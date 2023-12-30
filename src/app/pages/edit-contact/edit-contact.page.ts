@@ -13,7 +13,8 @@ import { CameraResultType, CameraSource, Camera } from '@capacitor/camera';
   styleUrls: ['edit-contact.page.scss']
 })
 export class EditContactPage {
-  contactoEditado: any;
+  // Inicializar contactoEditado como un objeto vacío
+  contactoEditado: any = {};
 
   latitude: any = 0;
   longitude: any = 0;
@@ -28,23 +29,25 @@ export class EditContactPage {
 
   ionViewWillEnter() {
     const numeroTelefono = this.route.snapshot.paramMap.get('id');
-
-    // Obtén el contacto a editar por número de teléfono
-    this.contactoEditado = numeroTelefono ? this.contactService.getContactoPorTelefono(numeroTelefono) : null;
-
-    // Asegúrate de que todos los campos estén inicializados
-    if (this.contactoEditado) {
-      this.contactoEditado = {
-        nombre: this.contactoEditado.nombre || '',
-        apellido: this.contactoEditado.apellido || '',
-        direccion: this.contactoEditado.direccion || '',
-        telefono: this.contactoEditado.telefono || '',
-        correo: this.contactoEditado.correo || '',
-        foto: this.contactoEditado.foto || ''
-      };
+  
+    if (numeroTelefono) {
+      // Obtén el contacto a editar por número de teléfono
+      this.contactoEditado = this.contactService.getContactoPorTelefono(numeroTelefono);
+  
+      // Asegúrate de que todos los campos estén inicializados
+      if (this.contactoEditado) {
+        this.contactoEditado = {
+          nombre: this.contactoEditado.nombre || '',
+          apellido: this.contactoEditado.apellido || '',
+          direccion: this.contactoEditado.direccion || '',
+          telefono: this.contactoEditado.telefono || '',
+          correo: this.contactoEditado.correo || '',
+          foto: this.contactoEditado.foto || ''
+        };
+      }
     }
   }
-
+  
   async guardarContactoEditado() {
     try {
       const ubicacion = await this.obtenerUbicacion();
@@ -82,13 +85,12 @@ export class EditContactPage {
       return;
     }
 
-    const image = await Camera["getPhoto"]({
+    const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Camera
     });
-    
 
     this.contactoEditado.foto = image.dataUrl;
   }
@@ -99,13 +101,12 @@ export class EditContactPage {
       return;
     }
 
-    const image = await Camera["getPhoto"]({
+    const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera
+      source: CameraSource.Photos
     });
-    
 
     this.contactoEditado.foto = image.dataUrl;
   }
@@ -131,5 +132,5 @@ export class EditContactPage {
       .catch(error => {
         console.error('Error al obtener coordenadas:', error);
       });
-  }  
+  }
 }

@@ -21,11 +21,11 @@
     </ion-item>
   </ion-list>
 
+  <ion-button expand="full" [routerLink]="['/home']">Volver al Home</ion-button>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="agregarContacto()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
-  <ion-button expand="full" routerLink="/edit-contact">Editar Contacto</ion-button>
 </ion-content>

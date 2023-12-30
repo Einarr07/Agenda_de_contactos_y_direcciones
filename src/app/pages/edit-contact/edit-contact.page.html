@@ -27,7 +27,7 @@
 
     <ion-item>
       <ion-label position="stacked">Teléfono</ion-label>
-      <ion-input [(ngModel)]="contactoEditado.telefono" name="telefono" type="tel"></ion-input>
+      <ion-input [(ngModel)]="contactoEditado.telefono" name="telefono" type="tel" pattern="[0-9]*" required></ion-input>
     </ion-item>
 
     <ion-item>
@@ -37,7 +37,8 @@
 
     <ion-item>
       <ion-label position="stacked">Foto</ion-label>
-      <input type="file" accept="image/*" (change)="onFileSelected($event)">
+      <ion-button expand="full" (click)="tomarFoto()">Tomar Foto</ion-button>
+      <ion-button expand="full" (click)="seleccionarFoto()">Seleccionar Foto</ion-button>
     </ion-item>
   </ion-list>
 
@@ -63,10 +64,10 @@
       Esta es tu ubicación actual
     </ion-button>
   </div>
-  
+
   <!-- Botones para guardar y volver -->
   <div class="ion-margin-top ion-padding">
     <ion-button expand="full" (click)="guardarContactoEditado()">Guardar Cambios</ion-button>
-  <ion-button expand="full" (click)="volverAlHome()">Volver al Home</ion-button>
+    <ion-button expand="full" (click)="volverAlHome()">Volver al Home</ion-button>
   </div>
 </ion-content>
