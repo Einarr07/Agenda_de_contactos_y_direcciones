@@ -6,6 +6,8 @@ import { ContactService } from '../../services/contact.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ActivatedRoute } from '@angular/router';
 import { CameraResultType, CameraSource, Camera } from '@capacitor/camera';
+import { v4 as uuidv4 } from 'uuid';  // Importa uuidv4
+
 
 @Component({
   selector: 'app-edit-contact',
@@ -28,32 +30,48 @@ export class EditContactPage {
   ) {}
 
   ionViewWillEnter() {
-    const numeroTelefono = this.route.snapshot.paramMap.get('id');
+    const identificador = this.route.snapshot.paramMap.get('id');
+    console.log('Identificador:', identificador);
   
-    if (numeroTelefono) {
-      // Obtén el contacto a editar por número de teléfono
-      this.contactoEditado = this.contactService.getContactoPorTelefono(numeroTelefono);
+    if (identificador) {
+      this.contactService.getContactoPorId(identificador).subscribe((contacto: any) => {
+        console.log('Contacto a editar:', contacto);
   
-      // Asegúrate de que todos los campos estén inicializados
-      if (this.contactoEditado) {
-        this.contactoEditado = {
-          nombre: this.contactoEditado.nombre || '',
-          apellido: this.contactoEditado.apellido || '',
-          direccion: this.contactoEditado.direccion || '',
-          telefono: this.contactoEditado.telefono || '',
-          correo: this.contactoEditado.correo || '',
-          foto: this.contactoEditado.foto || ''
-        };
-      }
+        if (contacto) {
+          this.contactoEditado = {
+            nombre: contacto.nombre || '',
+            apellido: contacto.apellido || '',
+            direccion: contacto.direccion || '',
+            telefono: contacto.telefono || '',
+            correo: contacto.correo || '',
+            foto: contacto.foto || '',
+            id: contacto.id || this.generarNuevoId(),
+          };
+        } else {
+          console.warn('El contacto no existe.');
+        }
+      });
     }
+  }
+  
+  
+  private generarNuevoId(): string {
+    // Lógica para generar un nuevo ID (por ejemplo, usando uuidv4)
+    return 'nuevo-identificador';
+  }
+
+  obtenerNuevoId(): string {
+    // Usa uuidv4 para generar un nuevo identificador único
+    return uuidv4();
   }
   
   async guardarContactoEditado() {
     try {
-      const ubicacion = await this.obtenerUbicacion();
-      this.contactoEditado.direccion = ubicacion;
-
-      // Llamada al servicio para actualizar el contacto en la base de datos
+      if (!this.contactoEditado.id) {
+        console.error('ID de contacto no válido: el campo "id" está ausente o es undefined.');
+        return;
+      }
+  
       await this.contactService.actualizarContacto(this.contactoEditado);
       console.log('Contacto actualizado con éxito.');
       this.navCtrl.navigateBack('/contact-list');
