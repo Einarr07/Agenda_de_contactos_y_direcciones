@@ -57,3 +57,6 @@ Pasos para la instalación:
 
 # Generar la APK
  comados: ng build 'para construir la apk', npx cap sync android 'para guardar todos los cambios', npx cap open android 'para mandar la aplicación a desplegarse en android studio'
+
+# Enlace del video de manual de usuario y retos
+https://www.youtube.com/watch?v=lRLjueLfI48
