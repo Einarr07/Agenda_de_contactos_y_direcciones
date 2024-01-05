@@ -60,3 +60,9 @@ Pasos para la instalación:
 
 # Enlace del video de manual de usuario y retos
 https://www.youtube.com/watch?v=lRLjueLfI48
+
+#Captuiras de Pantalla de la aplicacion 🎞️
+#Registrarse 👨‍💻
+![image](https://github.com/Einarr07/Agenda_de_contactos_y_direcciones/assets/85316345/5fe87ee5-57e8-4835-9914-dd2a8c8ef6b5)
+
+
