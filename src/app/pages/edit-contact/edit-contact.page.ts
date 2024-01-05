@@ -98,35 +98,41 @@ export class EditContactPage {
   }
 
   async tomarFoto() {
-    if (!this.platform.is('hybrid')) {
-      console.log('La función de la cámara solo está disponible en dispositivos móviles.');
-      return;
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Base64,
+        source: CameraSource.Camera
+      });
+  
+      this.contactoEditado.foto = 'data:image/jpeg;base64,' + image.base64String;
+    } catch (error) {
+      console.error('Error al tomar la foto:', error);
     }
 
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera
-    });
-
-    this.contactoEditado.foto = image.dataUrl;
+    /*this.contactoEditado.foto = image.dataUrl;*/
   }
 
   async seleccionarFoto() {
-    if (!this.platform.is('hybrid')) {
-      console.log('La selección de la galería solo está disponible en dispositivos móviles.');
-      return;
+    try {
+      // Verificar si la aplicación se está ejecutando en un dispositivo móvil
+      if (this.platform.is('cordova') || this.platform.is('capacitor')) {
+        const image = await Camera.getPhoto({
+          quality: 90,
+          allowEditing: false,
+          resultType: CameraResultType.Base64,
+          source: CameraSource.Photos
+        });
+
+        this.contactoEditado.foto = 'data:image/jpeg;base64,' + image.base64String;
+      } else {
+        // Lógica para manejar la selección de fotos en un entorno web
+        console.warn('La selección de fotos desde la galería solo está disponible en dispositivos móviles.');
+      }
+    } catch (error) {
+      console.error('Error al seleccionar la foto:', error);
     }
-
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Photos
-    });
-
-    this.contactoEditado.foto = image.dataUrl;
   }
 
   onFileSelected(event: any) {

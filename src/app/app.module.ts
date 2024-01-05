@@ -12,7 +12,7 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder/ngx'
 
 import {AngularFireModule} from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import {environment} from '../environments/environment'
+import {environment} from '../environments/environment.prod'
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
